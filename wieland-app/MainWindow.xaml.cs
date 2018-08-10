@@ -24,12 +24,21 @@ namespace wieland_app
 		public MainWindow()
 		{
 			InitializeComponent();
+			//SerializeCsv.SerializeBacklogCsv(@"D:\zCsharp\New Wieland\backlog.csv", new DateTime(2018, 8, 10));
+			//SerializeCsv.SerializeVinylCsv();
+			//SerializeCsv.SerializeBasePartCsv();
+			//SerializeCsv.SerializeDefaultVinylList();
 
-			SerializeCsv.SerializeBacklogCsv(@"D:\zCsharp\New Wieland\backlog.csv", new DateTime(2018, 8, 10));
-			SerializeCsv.SerializeVinylCsv();
-			SerializeCsv.SerializeBasePartCsv();
+			List<Vinyl> vinyls = SerializeCsv.OpenBinFile<Vinyl>("default_vinyl_list.bin");
 
-
+			foreach (var vinyl in vinyls)
+			{
+				Debug.WriteLine($"{vinyl.Color} - {vinyl.CustomerFabricNumber}");
+			    foreach (var part in vinyl.VinylParts)
+			    {
+			        Debug.WriteLine($"        {part.PartNumber} - {part.ThisPartsLy}");
+			    }
+			}
 
 
 

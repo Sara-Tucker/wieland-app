@@ -36,16 +36,21 @@ namespace wieland_app
 				defaultVinylList.Add(new Vinyl(vinyl.Color, vinyl.CustomerFabricNumber, vinyl.WielandNum));				
 			}
 
+			// a bit inefficient, could make serialized Parts list and then just add the list to Vinyl obj with custnum maybe?
 			foreach (var vinyl in defaultVinylList)
 			{
 				foreach (var basePart in basePartCsv)
 				{
+					float basePartLinYards = 0;
+					if (!String.IsNullOrEmpty(basePart.LY))
+						basePartLinYards = Convert.ToSingle(basePart.LY);
 
+					vinyl.VinylParts.Add(new Part(basePart.PartNumber + "-" + vinyl.CustomerFabricNumber, basePartLinYards, 0));
 				}
 			}
 
-
-			//createbinfile()
+			string binPath = $"{dataDir}default_vinyl_list.bin";
+			CreateBinFile(binPath, defaultVinylList);
 		}
 
 		public static void SerializeVinylCsv()
