@@ -27,17 +27,23 @@ namespace wieland_app
 			//SerializeCsv.SerializeBacklogCsv(@"D:\zCsharp\New Wieland\backlog.csv", new DateTime(2018, 8, 10));
 			//SerializeCsv.SerializeVinylCsv();
 			//SerializeCsv.SerializeBasePartCsv();
+			//SerializeCsv.SerializeStoolCsv();
 			//SerializeCsv.SerializeDefaultVinylList();
 
-			List<Vinyl> vinyls = SerializeCsv.OpenBinFile<Vinyl>("default_vinyl_list.bin");
+
+			List<Vinyl> vinyls = CreateReportData.CreateReport("BL-8-10-2018.bin", new DateTime(2018, 8, 11), new DateTime(2018, 9, 11));
 
 			foreach (var vinyl in vinyls)
 			{
-				Debug.WriteLine($"{vinyl.Color} - {vinyl.CustomerFabricNumber}");
-			    foreach (var part in vinyl.VinylParts)
-			    {
-			        Debug.WriteLine($"        {part.PartNumber} - {part.ThisPartsLy}");
-			    }
+				Debug.WriteLine($"{vinyl.Color} ({vinyl.CustomerFabricNumber}):");
+				foreach (var part in vinyl.VinylParts)
+				{
+					var idk = part.TotalYards.ToString("0.#");
+					Debug.WriteLine($"{part.PartNumber}:  {part.TotalQuantity} parts,  {idk} yards");
+				}
+				var idkk = vinyl.TotalYards.ToString("0.#");
+				Debug.WriteLine($"Total yards:  {idkk}");
+				Debug.WriteLine("");
 			}
 
 

@@ -58,6 +58,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="CreateReportData.cs" />
+    <Compile Include="CsvStool.cs" />
     <Compile Include="Part.cs" />
     <Compile Include="SerializeCsv.cs" />
     <Compile Include="Vinyl.cs" />

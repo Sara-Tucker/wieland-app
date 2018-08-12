@@ -9,6 +9,7 @@ namespace wieland_app
 		public string CustomerFabricNumber { get; set; }
 		public string WielandFabricNumber { get; set; }
 		public List<Part> VinylParts { get; set; }
+	    public float TotalYards { get; set; }
 
 
 		public Vinyl(string color, string customerFabricNumber, string wielandFabricNumber)
@@ -17,17 +18,18 @@ namespace wieland_app
 			CustomerFabricNumber = customerFabricNumber;
 			WielandFabricNumber = wielandFabricNumber;
 			VinylParts = new List<Part>();
+		    TotalYards = 0f;
 		}
 
 
-		public float CalcVinylTotalYards()
+		public void CalcVinylTotalYards()
 		{
-			float vinylTotalYards = 0;
+		    float total = 0f;
 			foreach (var part in VinylParts)
 			{
-				vinylTotalYards += part.CalcThisPartsTotalYards();
+				total += part.TotalYards;
 			}
-			return vinylTotalYards;
+		    TotalYards = total;
 		}
 	}
 }

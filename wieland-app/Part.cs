@@ -7,19 +7,21 @@ namespace wieland_app
 		public string PartNumber { get; set; }
 		public float ThisPartsLy { get; set; }
 		public int TotalQuantity { get; set; }
+	    public float TotalYards { get; set; }
 
 
-		public Part(string partNumber, float thisPartsLy, int totalQuantity)
+		public Part(string partNumber, float thisPartsLy)
 		{
 			PartNumber = partNumber;
 			ThisPartsLy = thisPartsLy;
-			TotalQuantity = totalQuantity;
+			TotalQuantity = 0;
+		    TotalYards = 0f;
 		}
 
 
-		public float CalcThisPartsTotalYards()
+		public void CalcThisPartsTotalYards()
 		{
-			return ThisPartsLy * TotalQuantity;
+			TotalYards = ThisPartsLy * TotalQuantity;
 		}
 	}
 }

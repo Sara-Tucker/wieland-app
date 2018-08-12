@@ -29,6 +29,7 @@ namespace wieland_app
 		{
 			List<CsvVinyl> vinylCsv = OpenBinFile<CsvVinyl>("vinyl_csv.bin");
 			List<CsvBasePart> basePartCsv = OpenBinFile<CsvBasePart>("base_part_csv.bin");
+		    List<CsvStool> stoolCsv = OpenBinFile<CsvStool>("medical_stools_csv.bin");
 			List<Vinyl> defaultVinylList = new List<Vinyl>();
 
 			foreach (var vinyl in vinylCsv)
@@ -45,7 +46,15 @@ namespace wieland_app
 					if (!String.IsNullOrEmpty(basePart.LY))
 						basePartLinYards = Convert.ToSingle(basePart.LY);
 
-					vinyl.VinylParts.Add(new Part(basePart.PartNumber + "-" + vinyl.CustomerFabricNumber, basePartLinYards, 0));
+					vinyl.VinylParts.Add(new Part(basePart.PartNumber + "-" + vinyl.CustomerFabricNumber, basePartLinYards));
+				}
+
+				foreach (var stool in stoolCsv)
+				{
+				    if (stool.Fabric == vinyl.WielandFabricNumber)
+				    {
+				        vinyl.VinylParts.Add(new Part(stool.PartNum, stool.Yards));
+				    }
 				}
 			}
 
@@ -75,6 +84,18 @@ namespace wieland_app
 
 			string binPath = dataDir + "base_part_csv.bin";
 			CreateBinFile(binPath, basePartList);
+		}
+
+		public static void SerializeStoolCsv()
+		{
+			string path = dataDir + "medical_stools_csv.csv";
+
+			TextReader textReader = File.OpenText(path);
+			var csv = new CsvReader(textReader);
+			List<CsvStool> stoolList = csv.GetRecords<CsvStool>().ToList();
+
+			string binPath = dataDir + "medical_stools_csv.bin";
+			CreateBinFile(binPath, stoolList);
 		}
 
 
